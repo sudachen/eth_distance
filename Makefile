@@ -1,7 +1,9 @@
 SHELL=/bin/bash
 
-build:
+mod_distance.so: mod_distance.c
 	@gcc -g -O2 -fPIC -shared mod_distance.c -o mod_distance.so
+
+build: mod_distance.so
 
 install: build
 	@if [ $$(id -u) == 0 ] ; then \

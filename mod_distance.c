@@ -10,8 +10,8 @@ static double DEG_TO_RAD = 0.017453292519943295769236907684886;
 
 static void eth_point(sqlite3_context *ctx, int n, sqlite3_value **args){
     if ( n == 2 ) {
-        uint64_t lat = (uint32_t)(((int32_t)sqlite3_value_double(args[0])*100000)%10000000);
-        uint64_t lng = (uint32_t)(((int32_t)sqlite3_value_double(args[1])*100000)%10000000);
+        uint64_t lat = (uint32_t)(((int32_t)(sqlite3_value_double(args[0])*100000))%10000000);
+        uint64_t lng = (uint32_t)(((int32_t)(sqlite3_value_double(args[1])*100000))%10000000);
         sqlite3_result_int64(ctx,(lat << 32 | lng));
     } 
 }
