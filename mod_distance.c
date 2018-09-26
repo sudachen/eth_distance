@@ -8,6 +8,14 @@
 SQLITE_EXTENSION_INIT1;
 static double DEG_TO_RAD = 0.017453292519943295769236907684886;
 
+static void eth_exp(sqlite3_context *ctx, int n, sqlite3_value **args) {
+    if ( n == 1 ) {
+        double x = sqlite3_value_double(args[0]);
+        double r = exp(x);
+        sqlite3_result_double(ctx,r);
+    }
+}
+
 static void eth_point(sqlite3_context *ctx, int n, sqlite3_value **args){
     if ( n == 2 ) {
         uint64_t lat = (uint32_t)(((int32_t)(sqlite3_value_double(args[0])*100000))%10000000);
@@ -62,6 +70,7 @@ int sqlite3_extension_init( /* <== Change this name, maybe */
   sqlite3_create_function(db, "eth_distance", 2, SQLITE_ANY, NULL, eth_distance, NULL, NULL);
   sqlite3_create_function(db, "eth_lat", 1, SQLITE_ANY, NULL, eth_lat, NULL, NULL);
   sqlite3_create_function(db, "eth_lng", 1, SQLITE_ANY, NULL, eth_lng, NULL, NULL);
+  sqlite3_create_function(db, "eth_exp", 1, SQLITE_ANY, NULL, eth_exp, NULL, NULL);
   return rc;
 }
 
